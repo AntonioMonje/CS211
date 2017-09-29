@@ -1,0 +1,71 @@
+//Antonio Monje
+//cs211 Assignment 3
+//Fibonnaci - client file
+//==========================================================
+
+#include <iostream>
+using namespace std;
+#include <time.h>
+
+//Prototype of the function
+int fib(int pos);
+
+int main()
+{
+  // variables are initialized
+  clock_t start, end, Rstart, Rend;
+  int fibNum = 0;
+  int pos;
+  int Answer = 0;
+  //////////////////////////////
+  cout << "\n Enter a position: ";
+  cin >> pos;
+  //start timing
+  start = clock(); // clock() returns the number of clock ticks elapsed since the beginning of the program execution
+  
+//calculate a Fibonacci number at a specified position
+  // initializing more variables
+  int n1 = 0, n2 = 1;
+  ///////////////////
+  if(pos == 0)//this is to make it so it woks for fib(1)
+    {
+      n2 = 0;
+    }
+  else// if not 0 then do it normally
+    {
+      for(int i = 0; i < pos - 1; i++)//for loop from 0 to position entered
+	{
+	  fibNum = n1 + n2;
+	  n1 = n2;
+	  n2 = fibNum;
+	}
+    }
+  //stop timing
+  end = clock();
+  cout << "Elapsed time: " << (end - start) / double(CLOCKS_PER_SEC) * 1000 << " milliseconds" << endl;
+  // CLOCKS_PER_SEC is the number of clock ticks per second
+  cout << "Fibonnaci number at position " << pos << " is " << n2 << endl;
+  
+  
+  cout << "*******************************************************************************" << endl;
+  //start time for the recursive function
+  Rstart = clock();
+  //recursive function
+  Answer = fib(pos);
+  Rend = clock();
+  cout << "Elapsed time: " << (Rend - Rstart) / double(CLOCKS_PER_SEC) * 1000 << " milliseconds" << endl;
+  // CLOCKS_PER_SEC is the number of clock ticks per second
+  cout << "Fibonnaci number at position " << pos << " is " << Answer << endl;
+  return 0;
+}
+
+//Purpose: To get the fibonnac number at the position wanted
+//Parameter: the position entered
+//Algorithm: if pos <= 1 then return that position else return the calculation
+int fib(int pos)
+{
+  if(pos <= 1) //position is 0 or 1 (base cases)
+    return pos;
+  else//position is no 0 or 1 so return the calculation for fibonnaci wanted
+    return fib(pos - 2) + fib(pos - 1); 
+}

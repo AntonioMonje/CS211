@@ -1,0 +1,303 @@
+//Antonio Monje
+//cs211 Assignment 7
+//LL class implementation file
+//==================================================================================================================
+#include <iostream>
+using namespace std;
+#include "LL.h"
+//Purpose to initialize the data members
+//Parameters: nothing
+//Algorithm: nothing
+LL::LL()
+{
+  count = 0;
+  front = NULL;
+  rear = NULL;
+}
+//Purpose to destroy the queue
+//Parameters: nothing
+//Algorithm: nothing
+LL::~LL()
+{
+  while(!isEmpty())//checks is empty function
+    {
+      deleteFront();//deletes front element
+    }
+}
+//Purpose to add to the queue
+//Parameters: el_t
+//Algorithm: if count is 0 make front and rear a new node and put elem in rear else rear gets the new node and put an element in it then increment
+void LL::addRear(el_t el)
+{
+  if(count == 0)//checks if count is zer if yes front and rear make a new node
+    front = rear = new node;
+  else// else rear points to next and that make a  new node
+    {
+      rear-> next = new node;
+      rear = rear -> next;
+    }
+  rear-> elem = el;// rear is set to the new element added
+  rear-> next = NULL;//then rear points to a null character
+  count++;// increment
+}
+//Purpose to delete elements from queue
+//Parameters: nothing
+//Algorithm: check isEmpty else if not set temp front decrement delete temp.
+el_t LL::deleteFront()
+{
+  el_t e;
+  if(isEmpty())//checks is empty
+    queueError("The queue is Empty. Cannot delete!");
+  else// make temp that is set to fromt and makes front point to next
+      {
+	node* temp = front;
+	front = front -> next;
+	e = temp -> elem;//sets element to temp
+	count--;
+	delete temp;//deletes temp after front changes
+	if(front == NULL)//if front is null the set rear to null
+	  rear = NULL;
+       
+	return e;// return deleted element
+      }
+}
+
+//Purpose to check if the queue is empty
+//Parameters: nothing
+//Algorithm: checks if front and rear are null if yes then empty
+bool LL::isEmpty()
+{
+  if(front == NULL && rear == NULL)//if both are null then its empty
+    return true;
+  else// else it has something inside queue
+    return false;
+}
+//Purpose to displays the content of the queue
+//Parameters: nothing
+//Algorithm: make a node point to front while not null and cout that element then move on to the next
+void LL::displayAll()
+{
+
+  node* p = front;
+  while(p != NULL)// if p is not null then cout element
+    {
+      cout << p -> elem;
+      p = p -> next;// then point to next element
+    }
+}
+//Purpose to show an error
+//Parameters: string error message
+//Algorithm: cout error message
+void LL::queueError(string msg)
+{
+  cout << msg << endl;// display a error message
+  exit(1);
+}
+//Purpose to display the queue in reverse order
+//Parameters: nothing
+//Algorithm: calls PrintAllReverse(front) fumction to display it
+void LL::PrintAllReverse()
+{
+  PrintAllReverse(front);// dislplays the answer in reverse
+}
+//Purpose reverses the queue
+//Parameters: pointer node p
+//Algorithm: if p is null do nothing else call the function pointing to the next node and display the element
+void LL::PrintAllReverse(node* p)
+{
+  if(p == NULL)// if node is null do nothing
+    return;
+  else// point to element and display it
+    {
+      PrintAllReverse(p -> next);
+      cout << p -> elem;
+    }
+}
+//Purpose reverses the queue
+//Parameters: el 
+//Algorithm: checks if its empty to create add new elements to the rear which is the front if not point to the new node using a temporary variable and the change front and have front point to the tempary for the next item to add then increment the count 
+void LL::addFront(el_t el)
+{
+  if(count == 0)//checks if count is zer0 if yes front and rear make a new node
+    addRear(el);
+  else// else front points to next and that make a  new node
+    {
+      node* x = front;
+      front = new node;
+      front-> elem = el;
+      front-> next = x;  
+      count++;
+    }
+}
+//Purpose to delete the rear element
+//Parameters: nothing
+//Algorithm: checks if its empty to give error message if theirs one element then just delete the front else make a temporary variable and node that point to the front element then dellte the rear element and set rear to the temp variable and rear to null then increment the count
+el_t LL::deleteRear()
+{
+  el_t e;
+  if(isEmpty())//checks is empty
+    queueError("The queue is Empty. Cannot delete!");
+  else if(count == 1)
+    {
+     e = deleteFront();
+    }  
+else// make temp that is set to fromt and makes front point to next
+    {
+      e = rear -> elem;
+      node* p = front;
+      while(p->next!=rear)//while loop to set temp to element before rear
+	{
+	  p = p->next;
+	}
+      delete rear;// delete rear
+      rear = p;// make rear point to the temp which was one before the rear
+      rear->next = NULL;
+      count--;// increment the count
+    }
+  return e;// return e
+}
+
+//Purpose to delete a specific node
+//Parameters: el_t el
+//Algorithm: check if theirs something to delete if yes and the first element delete the front. else if not the first element go in for loop while not null character and and not the element your looking for then if not null set pre next equal to del next. if the current node which is del is equal to the rear set rear to previous then delete the node and increment
+void LL::deleteNode(el_t el)
+{
+  if(!isEmpty())
+    {
+      if(front->elem == el)//if the first element is the key then delete it
+      deleteFront();
+
+      else// else go through the for loop
+	{
+	  node* pre;
+	  node* del;
+    for(pre = front, del = front -> next; del!=NULL && del-> elem != el; pre = del, del = del -> next)
+	    ;       
+    if(del != NULL)// if not null the set pre next equal to del next
+	    {
+	      pre->next=del->next;
+	      if(del==rear)// if del(current) node is equal to rear set rear equal to pre then delete
+		rear=pre;
+	      delete del;// delete the node 
+	      count--;//increment
+	    }
+	}
+    }
+}
+
+//Purpose to add elements in order
+//Parameters: el_t el
+//Algorithm: checks if its empty just add it to the front or if first element add to the front else creat a new node while null and element is less than the one pointed in front of it using a temp variable that addd the element then the pointer node sets equal to the temp then you increment
+void LL::addInOrderAscend(el_t el)
+{
+ 
+  if(isEmpty())//checks if empty if yes then add to the front
+    addFront(el);
+  else if(el < front -> elem)// checks for first element if smaller than first element add to the front
+    addFront(el);
+  else
+    {
+      node* p = front;
+      while(p->next != NULL && p -> next -> elem < el)//while not null and element is less than element in front
+	p = p -> next;
+      
+      node* x = new node;// make a temp node 
+      x-> elem = el; // set temp equal to the lement     
+      x-> next = p->next;// set the nodes equal to each other
+      p->next = x;// set the node equal to the temp
+      count++;  // increment
+    }
+}
+
+//Purpose to search for a element
+//Parameters: el_t el
+//Algorithm: make a new node then in a while loop while node is not null if pointer is equal to the element return true else move to the next element if nothing is found exit loop and return false
+bool LL::search(el_t el)
+{
+  int comparison = 0;
+  node* p = front;//make temp node equal to front
+  while(p != NULL)//while node is not null
+    {
+      comparison++;
+      if(p->elem == el)//if temp node is equal to element your looking for return true
+	{
+	  cout << comparison << " Times Compared " << endl;
+	  return true;
+	}
+      else// if not the element move to next element
+	{
+	  p = p -> next;
+	}
+    }
+  cout << comparison << " Times Compared " << endl;
+  return false;// if element is not found return false
+}
+
+//Purpose to add elements in order descending
+//Parameters: el_t el
+//Algorithm: checks if its empty just add it to the front or if first element add to the front else creat a new node\while null and element is less than the one pointed in front of it using a temp variable that addd the element then the pointer node sets equal to the temp then you increment
+void LL::addInOrderDescend(el_t el)
+{
+  if(isEmpty())//if list is empty add element to the front
+    addFront(el);
+  else if(el > front -> elem)// if its the first element is bigger then the element add it to the front
+    addFront(el);
+  else// if not empty and not the first element
+    {
+      node* p = front;// make temp node equal to front
+      while(p->next != NULL && p -> next -> elem >= el)//if not null and element is greater than el point to next element
+        p = p -> next;
+
+      node* x = new node;// make a second temp node
+      x-> elem = el;// the temp points to the element passed to the function
+      x-> next = p->next;//set secont temp equal to the next temp
+      p->next = x;// set the first temp node equal to the second
+      count++;// increment
+    }
+}
+
+//Purpose to delete multiple specific node
+//Parameters: el_t el
+//Algorithm: check if theirs something to delete if yes and the first element delete the front. else if not the firs\t element go in for loop while not null character and and not the element your looking for then if not null set pre\next equal to del next. if the current node which is del is equal to the rear set rear to previous then delete the node and increment
+void LL::deleteNodes(el_t el)
+{
+  node* pre;
+  node* del;  
+  if(isEmpty())//if list is empty return nothing
+    {
+      return;
+    }
+  else// if not empty empty
+    {
+      if(front -> elem == el)// if front element is equal to what your looking for delete that node
+	{
+	  deleteFront();
+	}
+      if(count > 1)// if not the front element and count is greater than 1
+	{
+	  
+	  pre = front;//set to fron
+	  del = front -> next;// set to front next next
+	  
+	  for(pre, del; del != NULL; pre = del, del = del -> next)//for loop while del is not null
+	    {
+	      
+	      if(del == rear && del -> elem == el)// if its rear and del node equals that el deletet the rear
+		deleteRear();	      
+	      else if(del -> elem == el)//if it just equal to element set pre next equal to del next and delete
+		{  
+		  pre -> next = del -> next;
+		  delete del;		
+		  count--;// increment
+		}
+	    }
+	}
+    }
+}
+
+
+
+
+
+
+

@@ -1,0 +1,17 @@
+#include <iostream>
+#include "price.h"
+using namespace std;
+
+int main()
+{
+  Price P;
+  Price p1(2, 50);
+  Price p2(3, 75);
+  Price total = p1 + p2;
+  cout << "The total price is " << total.getDollar() << " dollars and " << total.getCent()
+	   << " cents" << endl;
+  
+  return 0;
+}
+
+

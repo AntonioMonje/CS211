@@ -1,0 +1,55 @@
+//Antonio Monje
+//cs211 Assignment 5
+//LQueue Class client file
+//========================================================
+#include <iostream>
+using namespace std;
+#include "lqueue.h"
+
+int main()
+{
+  LQueue q;
+  if(q.isEmpty())
+    cout << "Queue is Empty" << endl;
+  
+  q.displayAll();
+  
+  
+  q.addRear(1);
+  
+  q.displayAll();
+
+  cout << endl;
+  
+  q.addRear(2);
+  
+  q.addRear(3);
+
+  q.addRear(4);
+
+  q.displayAll();
+  cout << endl; 
+ cout << q.deleteFront() << " Was deleted" << endl;
+ cout << q.deleteFront() << " Was deleted" << endl;
+ cout << q.deleteFront() << " Was deleted" << endl;
+
+ 
+ q.displayAll();
+ cout << endl;
+ if(q.isEmpty())
+   cout << "Queue is Empty" << endl;
+ else
+   {
+     cout << "queue is not empty" << endl;
+   }
+ cout << endl; 
+ cout << q.deleteFront() << " Was deleted" << endl;
+ 
+ if(q.isEmpty())
+   cout << "Queue is Empty" << endl;
+ 
+ 
+ q.displayAll();
+
+ return 0;
+}

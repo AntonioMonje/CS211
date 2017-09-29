@@ -1,0 +1,48 @@
+//Antonio Monje
+//cs211 Assignment 4
+//Queue Class - header file
+//===================================================
+
+#ifndef QUEUE_H
+#define QUEUE_H
+#include <string>
+using namespace std;
+
+enum op {ADD, SUB, MULT, DIVI};
+
+//create a struct that will have an operand, a operator, another operand
+struct expr
+{
+  int oprd1;
+  op oprt;
+  int oprd2;
+};
+/*******************************
+Place the above code to queueu.h
+*******************************/
+
+typedef expr el_t; // el_t is an alias for char
+const int QUEUE_SIZE = 10; // this is the max number of elements the queue can have
+class Queue
+{
+ private:
+  // Data members are:
+  el_t el[QUEUE_SIZE]; // a character array called el
+  int count; // how many elements do we have right now?
+  int front; // where the front element of the queue is.
+  int rear; // where the rear element of the queue is.
+  // a private utility function for fatal error cases
+  // This displays an error messages passed to it and does exit(1);
+  void queueError(string); 
+ public:
+  Queue();// Default constructor
+  bool isEmpty();// holds the function that tells if the stack has nothing
+  bool isFull();// holds the function that tells if the stack is filled
+  void add(el_t);// holds the function for adding an element to the queue
+  el_t remove();// holds the function for removing an element from the queueu
+  el_t getFront();// holds the funvtion showing the front element
+  void goToBack();// holds the function for movin an element back
+  int getSize();// holds the functions that tells you how many elements you have
+  void printAll();// holds the function for showing all elements in the stack
+};
+#endif

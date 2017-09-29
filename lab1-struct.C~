@@ -1,0 +1,178 @@
+/*Implemented by: Antonio Monje
+Purpose: Assignment one to input student information and disply it.
+Date: 02/09/16*/
+#include <iostream>
+#include <iomanip>
+#include <cctype>
+#include <string>
+#include "inputCheck.h"
+using namespace std; 
+
+//######### DO NOT forget about the prototypes. You should know where to place them.  ############
+
+//Declare a struct called "student" with id, name, gender, major and age
+struct student
+{
+  int ID;
+  string Name;
+  char Gender;
+  string Major;
+  int age;
+};
+
+int getStuData(student stu[], int MAX);
+int findID(student stu[],int num, int look);
+void displayStu(student s);
+void findYoungOld(const student stu[], int num, int &young, int &old);
+void displayAllStu(student stu[], int num);
+
+//If you want to change the maximum number of students, change the number in one place.
+const int MAX = 5;
+
+int main()
+{
+  //delare an array of students with size MAX.
+  student stu[MAX];
+  int index;
+  int ID;
+  int i;
+  int young;
+  int old;
+  int num; //the number of students
+  char ans;
+  int look;
+  //call the getStuData function to fill the array with students' information 
+  num = getStuData(stu, MAX);  
+  //The id the user is looking for
+  //Find a student with that id and display the information about that student. If no student has the id, show an appropriate message.
+  if(num == 0)
+    {
+    cout << "no student entered" << endl;
+    }
+  else
+    {
+  cout << "Enter ID of student your looking for: ";
+  cin >> look;
+  index = findID(stu, num, look);  
+  if(index == -1)
+    {
+      cout << "ID not found" << endl;
+    }
+  else
+    {
+      displayStu(stu[index]);
+    }
+      findYoungOld(stu, num, young, old);
+      cout << "The youngest age is: " << young << endl;
+      cout << "The oldest age is: " << old << endl; 
+      displayAllStu(stu, num);
+    }  
+  
+  //find the youngest and oldest ages by calling findYoungOld and output those ages
+      return 0;
+}
+
+//This function loads students' data into the array and returns the number of students. 
+int getStuData(student stu[], int MAX) 
+{
+  int num = 0;
+  char ans;
+  int look;
+  int i = 0;
+  //fill the array with students' information entered from the keyboard - use the while loop
+  cout << "Do you want to enter a student information Y or N ";  
+ 
+ ans = getResponse("Invalid enter Y or N: ");
+   
+ while((ans == 'Y' || ans == 'y') &&  num != MAX)
+	{
+ 
+	  cout << "Enter The ID: ";
+	  stu[num].ID = getNumberInRange(0, 10000, "Invalid enter Id between 1 to 9999 ");
+	  cin.ignore();
+	  cout << "Enter The Name: ";
+	  getline(cin, stu[num].Name);
+	  cout << "Enter the Gender: ";
+	  stu[num].Gender = getgender("Invalid enter M or F: ");
+	  cin.ignore();		   	  
+	  cout << "Enter The Major: ";
+	  getline(cin, stu[num].Major);
+	  cout << "Enter The Age: ";
+	  stu[num].age = getAgeInRange(-1, 151, "Invalid enter age between 0 to 150 ");
+	  cout << "do you want to enter infromation for another student Y or N: ";
+	  ans = getResponse("Invalid enter Y or N: ");
+	  num++;
+	  if(num == MAX && (ans == 'Y' || ans == 'y'))
+	    {
+	      cout << "Array is full" << endl;
+	    }	
+	}	
+
+       
+      //fill the unused slots with the default values  
+if(num < MAX)
+  {  
+student Default = {0, " ", ' ', " ", 999}; //defalut values
+ 
+  for(int i = num; i < MAX; i++)                   
+    {
+      stu[i] = Default;
+    } 
+  }  
+  //return the number of students
+  return num; 
+}
+
+/* This function searches through the array to find the student with the id the user is looking for.
+   The user is asked to enter the id she is looking for in the main. 
+   Return the index or -1 if not found. */
+int findID(student stu[], int num, int look)
+{
+  int index;
+  for(index = 0; index < num; index++)
+    {
+      if(stu[index].ID == look)
+	{         
+  	  return index;  
+	}
+    }
+   
+ return -1;        
+}
+
+/*This function will be passed one student struct and display all the information (name, gender, major and age) about that student.*/
+
+
+void displayStu(student s)
+{
+  cout << left << setw(18) << s.Name << setw(14) << s.ID  << setw(16) << s.Gender << setw(20) << s.Major << setw(14) << s.age << setw(14) << endl;
+}
+
+/*This function will return the youngest and oldest ages */
+void findYoungOld(const student stu[], int num, int &young, int &old)
+{
+  young = old = stu[0].age;
+  for(int i = 1; i < num; i++)
+    {
+      if(stu[i].age < young)
+	{
+	  young = stu[i].age;
+	}
+      if(stu[i].age > old)
+	{       
+	  old = stu[i].age;
+	}   
+    } 
+}
+
+void displayAllStu(student stu[], int num)
+{
+  cout << left << setw(18) << "NAME" << setw(14) << "ID" << setw(16) << "GENDER" << setw(20) << "MAJOR" << setw(14) << "AGE" << endl;
+  cout << "-----------------------------------------------------------------------------" << endl;
+  for(int i = 0; i < num; i++)
+    {
+      displayStu(stu[i]); 
+    }
+}
+
+

@@ -1,0 +1,71 @@
+//Antonio Monje
+//cs211 Assignment 3
+//Stack Class - implementation file
+//===================================================
+
+#include <iostream>
+#include "stack.h"
+using namespace std;
+
+
+Stack::Stack()
+{
+  top = - 1;
+}
+bool Stack::isEmpty()
+{
+  if(top == -1)
+    return true;
+  else
+    return false;
+}
+
+bool Stack::isFull()
+{
+  if(top == MAX - 1)
+    return true;
+  else
+    return false;
+}
+void Stack::push(el_t part)
+{
+  if(isFull())
+    stackError("Stack overflow");
+  else
+    {
+      ar[++top] = part;
+    }
+}
+el_t Stack::pop()
+{
+  if(isEmpty())
+    stackError("stack underflow");
+  else return ar[top--];
+}
+
+el_t Stack::topElem()
+{
+  if (isEmpty())
+    stackError("stack is empty");
+  else
+    return ar[top];
+}
+void Stack::stackError(string msg)
+{
+  cout << msg << endl;
+  exit(1); 
+}
+void Stack::displayAll()
+{
+  for(int i = top; i >= 0; i--)
+    cout << ar[i] << endl;
+}
+
+void Stack::clearIt()
+{
+  while(!isEmpty())
+    pop();
+}
+
+
+

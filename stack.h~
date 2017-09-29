@@ -1,0 +1,29 @@
+#ifndef STACK_H
+#define STACK_H
+#include <string>
+using namespace std;
+
+const int MAX = 5;
+typedef int el_t;
+class Stack
+{
+ private:
+  el_t ar[MAX];
+  int top;
+  string msg;
+  void stackError(string);  
+  
+ public:
+  Stack();
+  Stack(el_t);
+  void push(el_t);
+  void clearIt();
+  void displayAll();
+  bool isFull();
+  bool isEmpty();
+  el_t pop();
+  el_t topElem();
+  
+
+};
+#endif

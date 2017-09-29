@@ -1,0 +1,62 @@
+#include <iostream>
+#include <ctime>
+#include "inputCheck.h"
+using namespace std;
+
+void display();
+
+int main()
+{
+  int r = 0;
+  int p = 0;
+  int s = 0;
+  int ans;
+  string c;
+int cpu = rand() % 3 + 1;
+ if(cpu == 1)
+   c = "rock"; 
+if(cpu == 2)
+  c = "Paper";
+ if(cpu == 3)
+   c = "Scissors";
+
+      display();
+      cout << endl;
+      cout << "Enter Your choice: " << endl;
+      ans = getNumberInRange(1, 4, "Invalid choice enter a 1, 2, or 3 please: ");
+  
+      if(ans == 1)
+	{
+	  cout << "You picked Rock! " << endl;
+	  cout << "I picked " << c << endl;
+	}
+      else if(ans == 2)
+	{
+	  cout << "You picked Paper! " << endl;
+	  cout << "I picked " << c << endl;
+	}
+      else if(ans == 3)
+	{ 
+	  cout << "You picked Scissors! " << endl;
+	  cout << "I picked " << c << endl;
+	}
+      else if(ans == 4)
+	{ 
+	  cout << "Thank you for playing! " << endl;
+	  cout << "Ending the program ..............." << endl;
+	}
+    
+      
+  return 0;
+}
+
+
+void display()
+{
+  cout << "Ready To Play Rock Paper Scissors!" << endl;
+  cout << "Your choices are: " << endl;
+  cout << "Enter 1 for Rock " << endl;
+  cout << "Enter 2 for Paper " << endl;
+  cout << "Enter 3 for Scissor " << endl;
+  cout << "Enter 4 to exit program " << endl;
+}

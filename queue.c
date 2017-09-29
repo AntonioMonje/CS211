@@ -1,0 +1,136 @@
+//Antonio MOnje
+//cs211 Assignment 4
+//Queue class implementation file
+//===========================================================
+#include <iostream>
+using namespace std;
+#include "queue.h"
+//purpose: constructor which initializes count, rear, and front
+Queue::Queue()
+{
+  count = 0;
+  front = 0;
+  rear = -1;
+}
+//Purpose: The purpose is to tell the user if queue is empty
+//Parameters: Nothing
+//Algorithm: if count is = to 0 then return true else return fale
+bool Queue::isEmpty()
+{
+  if(count == 0)//queue count is zero return true
+    return true;
+  else
+    return false;//queue in not empty return false
+
+}
+
+//Purpose: The purpose is to tell the user if queue is full
+//Parameters: Nothing
+//Algorithm: if rear equals queue size then return true else return false
+bool Queue::isFull()
+{
+  if(count == QUEUE_SIZE)//queueis filled return true
+    return true;
+  else
+    return false;//queue in not full return false
+}
+
+//Purpose: The purpose is to add an element to the queue
+//Parameters: new element of type el_t
+//Algorithm: make rear equal rear plus one mod by its size. Then you set the array of rear equal to the element to fill the array then you increment
+void Queue::add(el_t elem)
+{
+  if(isFull())//if queue is full display error
+    queueError("Queue is full cannot add more elements");
+  else// queue is not full so you add to the queue
+      {	
+	rear = (rear + 1) % QUEUE_SIZE;
+	el[rear] = elem;
+	count++;
+      }
+}
+
+//Purpose: The purpose is to remove an element from the queue
+//Parameters: Nothing
+//Algorithm: make e equal the array of front, then you increment by the modulos and then by the counter
+el_t Queue::remove()
+{
+  if(isEmpty())//if queue is empty display error
+    queueError("Queue is empty");
+  else//queue is not empty remove an element
+    {
+      el_t e = el[front];
+      front = (front + 1) % QUEUE_SIZE;
+      count--;
+      return e;
+    }
+}
+
+//Purpose: To check whats at the front
+//Parameter: Nothing
+//Algorithm: return front of the array
+el_t Queue::getFront()
+{
+  if(isEmpty())//if queue is empty display error
+    queueError("Queue is empty");
+  else//queue is not empty display front element
+    {
+      return el[front];
+    }
+}
+
+//Purpose: To make an element go back
+//Parameter: Nothing
+//Algorithm: you add a remove to make it switch to the back
+void Queue::goToBack()
+{
+  if(isEmpty())//if queue is empty display error
+    {
+      queueError("Queue is empty");
+    } 
+  else//queue is not empty add the remove function to move element back
+    {
+      add(remove());    
+    }
+}
+
+//Purpose: To get the size of the queue
+//Parameters: Nothing
+//Algorithm: you return the count
+int Queue::getSize()
+{
+  return count;// return the count
+}
+
+//Purpose: to display the queue
+//Parameters: nothing
+//Algorihm: you display front of the array and then increment while not equal to the real modulos formula
+/*
+void Queue::printAll()
+{
+
+  if(isEmpty())//if queue is empty display error
+    {
+      queueError("Queue is empty");
+    }
+  else//queue is not empty so display the queue
+    {
+      int x = front;
+      for(int i = 1; i <= count; i++)
+	{
+	  cout << el[x];
+	  x = (x+1)%QUEUE_SIZE;
+	}
+    }   
+  
+}
+*/
+
+//Purpose: To display an error message as needed
+//Parameters: String message
+// Algorithm displays the message using cout then exitss
+void Queue::queueError(string msg)
+{
+  cout << msg << endl;// display a error message
+  exit(1);
+}

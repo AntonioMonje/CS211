@@ -1,0 +1,99 @@
+//Antonio Monje
+//cs211 Assignment 5
+//LQueue class implementation file
+//===========================================================
+#include <iostream>
+using namespace std;
+#include "lqueue.h"
+//purpose: constructor which initializes count, rear, and front
+LQueue::LQueue()
+{
+  count = 0;
+  front = NULL;
+  rear = NULL;
+}
+
+LQueue::~LQueue()
+{
+  while(!isEmpty())
+    {
+      deleteFront();
+    }
+}
+
+void LQueue::addRear(el_t el)
+{
+  if(count == 0)
+    front = rear = new node;
+  else
+    {
+      rear-> next = new node;
+      rear = rear -> next;
+    }
+  rear-> elem = el;
+  rear-> next = NULL;
+  count++;
+}
+
+el_t LQueue::deleteFront()
+{
+  el_t e;
+  if(isEmpty())
+    queueError("The queue is Empty. Cannot delete!");
+    else
+      {
+	node* temp = front;
+	front = front -> next;
+	e = temp -> elem;
+	count--;
+	delete temp;
+	if(front == NULL)
+	  rear = NULL;
+       
+	return e;
+      }
+}
+
+
+
+bool LQueue::isEmpty()
+{
+  if(front == NULL && rear == NULL)
+    return true;
+  else
+    return false;
+}
+
+
+void LQueue::displayAll()
+{
+
+  node* p = front;
+  while(p != NULL)
+    {
+      cout << p -> elem;
+      p = p -> next;
+    }
+}
+
+void LQueue::queueError(string msg)
+{
+  cout << msg << endl;// display a error message
+  exit(1);
+}
+
+void LQueue::PrintAllReverse()
+{
+  PrintAllReverse(front);
+}
+
+void LQueue::PrintAllReverse(node* p)
+{
+  if(p == NULL)
+    return;
+  else
+    {
+      PrintAllReverse(p -> next);
+      cout << p -> elem;
+    }
+}

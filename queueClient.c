@@ -1,0 +1,104 @@
+//Antonio Monje
+//cs211 Assignment 4
+//Queue Class client file
+//========================================================
+#include <iostream>
+using namespace std;
+#include "queue.h"
+#include "inputCheck.h"
+
+void showMenu();
+
+int main()
+{// variables
+  int choice;
+  Queue q; // q is a new queue object
+  el_t elem;
+  bool Error1 = false;
+  bool Error2 = false;
+
+  do// do this whils the choice isn't to exit
+    {
+
+      showMenu();//displays the menu of choices for the user 
+      cout << "Enter your choice ----> ";
+      choice = getNumberInRange(1, 7, "Invalid choice. Enter 1 through 6: ");
+
+      switch(choice)// the user enters a choice and it goes to the case
+	{
+	case 1:// If user enters 1 you add an element if possible
+	  cout << "Enter a element: ";
+	  cin >> elem;
+	  if(q.isFull())// if queue is full displays error message
+	    { 
+	      cout << "Queue is full cannot add element" << endl;
+	    }
+	  else// if queue is not full it adds element
+	    {
+          q.add(elem);
+	    }         
+	  break;
+	case 2://the user enters choice and removes element
+	  if(q.isEmpty())//if queue is empty displays error message
+	    {
+	      cout << "Queue is Empty" << endl;
+	    }
+	  else// queue is not empty remove an element from queue
+	    {
+          q.remove();
+	    }
+	  break;
+	case 3://choice three displays the front element
+	  if(q.isEmpty())//displays error if queue is empty
+	    {
+	      cout << "Queue is empty" << endl;
+	    }
+	  else//queue is not empty displays front element
+	    {
+          cout << "The front element is: " << q.getFront();
+	    }	 
+	  break;
+	case 4://choice 4 moves element back
+	  if(q.isEmpty())//queue is empty and displays the message
+	    {
+	      cout << "Queue is empty" << endl;
+	    }
+	  else//queue is not empty moves function back
+	    {
+	  q.goToBack();
+	    }
+	  break;
+	case 5://choice 5 displays the queue size
+	  cout << "The size of the queue is: " << q.getSize();
+	  break;
+	case 6://choice 6 displays all the lements in the array
+	  if(q.isEmpty())//queue is empty display error
+	    {
+	      cout << "Queue is empty" << endl;
+	    }
+	  else//queue is not empty display elements in queue
+	    {
+	   q.printAll();
+	    }
+	  break;
+	case 7://choice 7 exits program
+	  cout << "Ending the program ..............." << endl;
+	}
+    }while(choice != 7);//keep asking until you pick 7
+
+}
+
+//Purpose: to show the user their choices
+//Parameters: Nothing
+//Algorithm: cout the choices
+void showMenu()
+{
+  cout << "\n*****************************************************************" << endl;
+  cout << "1: Add a new element" << endl;
+  cout << "2: Remove a element" << endl;
+  cout << "3: check front" << endl;
+  cout << "4: Go back to the rear" << endl;
+  cout << "5: Get the number of elements in the queue" << endl;
+  cout << "6: Display all elements in the array" << endl;
+  cout << "7: Quit porgram" << endl;
+}

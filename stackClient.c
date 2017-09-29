@@ -1,0 +1,115 @@
+#include <iostream>
+using namespace std;
+#include "stack.h"
+
+
+int main()
+{
+  Stack newStack;
+  
+  if(newStack.isEmpty())
+    {
+      cout << "the stack is empty" << endl;
+    }
+  
+  ///////////////////////////////////////
+
+  if(!newStack.isFull())
+    {    
+      newStack.push("Mike");
+    }
+  else
+    {
+      cout << "the stack is Full" << endl;
+    }
+  if(!newStack.isFull())
+    {
+      newStack.push("Kathy");
+    }
+  else
+    {
+      cout << "the stack is Full" << endl;
+    }
+  ////////////////////////////////////////
+  
+  cout << newStack.topElem() << " is at the top" << endl;
+
+  ////////////////////////////////////////
+  
+  if(!newStack.isFull())
+    {
+      newStack.push("Dave");
+    }
+  else
+    {
+      cout << "the stack is Full" << endl;
+    }
+  if(!newStack.isFull())
+    {
+      newStack.push("Alice");
+    }
+  else
+    {
+      cout << "the stack is Full" << endl;
+    }
+  if(!newStack.isFull())
+    {
+      newStack.push("Tom");
+    }
+  else
+    {
+      cout << "the stack is Full" << endl;
+    }
+  //////////////////////////////////////////
+  
+  if(newStack.isFull())
+    {
+      cout << "Stack is FULL!" << endl;
+    }
+  
+  /////////////////////////////////////////
+  newStack.displayAll();
+  
+  /////////////////////////////////////////
+  if(!newStack.isFull())
+    {
+      newStack.push("Meg");
+    }
+  else
+    {
+      cout << "the stack is Full you can not push" << endl;
+    }
+  /////////////////////////////////////////////
+  
+  if(!newStack.isEmpty())
+    {
+      newStack.pop();
+    }
+  else
+    {
+      cout << "the stack is empty" << endl;
+    }
+  
+  /////////////////////////////////////////////
+  cout << newStack.topElem() << " is at the top" << endl;
+
+  //////////////////////////////////////////////
+ if(newStack.isEmpty())
+   {
+     cout << "the stack is empty" << endl;
+   }
+ 
+ //////////////////////////////////////////////
+ newStack.clearIt();
+
+ //////////////////////////////////////////////
+ if(newStack.isEmpty())
+   {
+     cout << "the stack is empty" << endl;
+   }
+ /////////////////////////////////////////////
+return 0;
+}
+
+
+

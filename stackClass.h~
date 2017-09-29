@@ -1,0 +1,15 @@
+#include <string>
+using namespace std;
+
+const int MAX = 10;
+class Stack
+{
+ private:
+  string ar[MAX];
+
+ public:
+  Stack();
+  
+};
+
+

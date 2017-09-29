@@ -1,0 +1,19 @@
+#include <iostream>
+#ifndef PRICE_H
+#define PRICE_H
+using namespace std;
+
+class Price
+{
+ private:
+  int dollar;
+  int cent;
+ public:
+  Price();
+  Price(int, int);
+  Price operator+(const Price&);
+  Price operator-(const Price&);
+  int getDollar() const;
+  int getCent() const;
+};
+#endif
